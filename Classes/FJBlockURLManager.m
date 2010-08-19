@@ -1,5 +1,6 @@
 #import "FJBlockURLManager.h"
 #import "FJBlockURLRequest.h"
+#import "NSString+extensions.h"
 
 @interface FJBlockURLRequest (FJNetworkBlockManager)
 

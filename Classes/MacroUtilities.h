@@ -24,7 +24,9 @@
 
 #if DEBUG==1
 
+#ifndef debugLog
 #define debugLog(format, ...) NSLog(@"%s:%@", __PRETTY_FUNCTION__,[NSString stringWithFormat:format, ## __VA_ARGS__]);
+#endif
 #define MARK	debugLog(@"%s", __PRETTY_FUNCTION__);
 #define START_TIMER NSTimeInterval start = [NSDate timeIntervalSinceReferenceDate];
 #define END_TIMER(msg) 	NSTimeInterval stop = [NSDate timeIntervalSinceReferenceDate]; debugLog([NSString stringWithFormat:@"%@ Time = %f", msg, stop-start]);

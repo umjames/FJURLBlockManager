@@ -266,7 +266,7 @@ int const kMaxAttempts = 3;
 
         __block NSData* data = [self.responseData copy];
         
-        void (^responseBlock)() = ^() {
+        void (^responseBlock)(void) = ^(void) {
             //NSLog(@"Queue check: %@", [self.responseData description]);
             self.completionBlock(data);
         };
