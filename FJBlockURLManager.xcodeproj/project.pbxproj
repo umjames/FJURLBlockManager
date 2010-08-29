@@ -41,6 +41,7 @@
 		C48D79DF120F32700022E643 /* FJImageURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C48D79DE120F32700022E643 /* FJImageURLRequest.m */; };
 		C48D79F6120F33460022E643 /* NSObject+AssociatedObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = C48D79F5120F33460022E643 /* NSObject+AssociatedObjects.m */; };
 		C48D79FF120F339A0022E643 /* NSError+Vimeo.m in Sources */ = {isa = PBXBuildFile; fileRef = C48D79FE120F339A0022E643 /* NSError+Vimeo.m */; };
+		FD320DB7122AF75E0093CFC0 /* HTTPBlockURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FD320DB6122AF75E0093CFC0 /* HTTPBlockURLRequest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -110,6 +111,8 @@
 		C48D79F5120F33460022E643 /* NSObject+AssociatedObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AssociatedObjects.m"; sourceTree = "<group>"; };
 		C48D79FD120F339A0022E643 /* NSError+Vimeo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Vimeo.h"; sourceTree = "<group>"; };
 		C48D79FE120F339A0022E643 /* NSError+Vimeo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Vimeo.m"; sourceTree = "<group>"; };
+		FD320DB5122AF75E0093CFC0 /* HTTPBlockURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPBlockURLRequest.h; sourceTree = "<group>"; };
+		FD320DB6122AF75E0093CFC0 /* HTTPBlockURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPBlockURLRequest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +202,8 @@
 				C40C63C511FB6166008A66B9 /* FJBlockURLRequest.m */,
 				C46C182811F68BE700377E8C /* FJBlockURLManager.h */,
 				C46C182911F68BE700377E8C /* FJBlockURLManager.m */,
+				FD320DB5122AF75E0093CFC0 /* HTTPBlockURLRequest.h */,
+				FD320DB6122AF75E0093CFC0 /* HTTPBlockURLRequest.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -306,6 +311,7 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "FJBlockURLManager" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
@@ -365,6 +371,7 @@
 				C48D79DF120F32700022E643 /* FJImageURLRequest.m in Sources */,
 				C48D79F6120F33460022E643 /* NSObject+AssociatedObjects.m in Sources */,
 				C48D79FF120F339A0022E643 /* NSError+Vimeo.m in Sources */,
+				FD320DB7122AF75E0093CFC0 /* HTTPBlockURLRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
