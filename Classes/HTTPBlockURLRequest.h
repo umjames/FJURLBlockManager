@@ -17,4 +17,6 @@ extern NSString* const HTTPBlockURLErrorDomain;
 
 @property (nonatomic, readonly, retain) NSHTTPURLResponse*	HTTPResponse;
 
+- (BOOL)responseWasSuccessful;
+
 @end

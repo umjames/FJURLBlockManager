@@ -14,8 +14,6 @@ NSString* const HTTPBlockURLErrorDomain = @"HTTPBlockURLErrorDomain";
 
 @property (nonatomic, readwrite, retain) NSHTTPURLResponse*	HTTPResponse;
 
-- (BOOL)_responseIsSuccessful;
-
 @end
 
 @implementation HTTPBlockURLRequest
@@ -42,7 +40,7 @@ NSString* const HTTPBlockURLErrorDomain = @"HTTPBlockURLErrorDomain";
 
 - (void)connectionDidFinishLoading: (NSURLConnection*)connection
 {    
-    if ([self _responseIsSuccessful])
+    if ([self responseWasSuccessful])
 	{
 		[super connectionDidFinishLoading: connection];
 	}
@@ -54,7 +52,7 @@ NSString* const HTTPBlockURLErrorDomain = @"HTTPBlockURLErrorDomain";
 	}
 }
 
-- (BOOL)_responseIsSuccessful
+- (BOOL)responseWasSuccessful
 {
 	if (nil == self.HTTPResponse)
 	{
