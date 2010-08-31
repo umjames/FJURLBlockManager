@@ -11,6 +11,8 @@
 
 extern NSString* const HTTPBlockURLErrorDomain;
 
+extern NSString* const HTTPBlockURLResponseDataKey;
+
 @interface HTTPBlockURLRequest : FJBlockURLRequest
 {
 }

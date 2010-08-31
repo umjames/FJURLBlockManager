@@ -9,6 +9,7 @@
 #import "HTTPBlockURLRequest.h"
 
 NSString* const HTTPBlockURLErrorDomain = @"HTTPBlockURLErrorDomain";
+NSString* const HTTPBlockURLResponseDataKey = @"HTTPBlockURLResponseDataKey";
 
 @interface HTTPBlockURLRequest ()
 
@@ -46,7 +47,10 @@ NSString* const HTTPBlockURLErrorDomain = @"HTTPBlockURLErrorDomain";
 	}
 	else
 	{
-		NSError*	HTTPError = [NSError errorWithDomain: HTTPBlockURLErrorDomain code: [self.HTTPResponse statusCode] userInfo: nil];
+		NSData*		responseData = (self.responseData) ? self.responseData : [NSData data];
+		NSError*	HTTPError = [NSError errorWithDomain: HTTPBlockURLErrorDomain 
+												 code: [self.HTTPResponse statusCode] 
+											 userInfo: [NSDictionary dictionaryWithObject: responseData forKey: HTTPBlockURLResponseDataKey]];
 		
 		[self connection: connection didFailWithError: HTTPError];
 	}
