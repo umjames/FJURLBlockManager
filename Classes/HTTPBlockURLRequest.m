@@ -10,16 +10,24 @@
 
 NSString* const HTTPBlockURLErrorDomain = @"HTTPBlockURLErrorDomain";
 NSString* const HTTPBlockURLResponseDataKey = @"HTTPBlockURLResponseDataKey";
+NSString* const HTTPBlockURLResponseAsStringKey = @"HTTPBlockURLResponseAsStringKey";
 
 @interface HTTPBlockURLRequest ()
 
 @property (nonatomic, readwrite, retain) NSHTTPURLResponse*	HTTPResponse;
+
+- (NSString*)_convertData: (NSData*)data toStringUsingEncoding: (NSStringEncoding)encoding;
 
 @end
 
 @implementation HTTPBlockURLRequest
 
 @synthesize HTTPResponse;
+
+- (NSString*)_convertData: (NSData*)data toStringUsingEncoding: (NSStringEncoding)encoding
+{
+	return [[[NSString alloc] initWithData: data encoding: encoding] autorelease];
+}
 
 - (void)dealloc
 {
@@ -50,7 +58,7 @@ NSString* const HTTPBlockURLResponseDataKey = @"HTTPBlockURLResponseDataKey";
 		NSData*		responseData = (self.responseData) ? self.responseData : [NSData data];
 		NSError*	HTTPError = [NSError errorWithDomain: HTTPBlockURLErrorDomain 
 												 code: [self.HTTPResponse statusCode] 
-											 userInfo: [NSDictionary dictionaryWithObject: responseData forKey: HTTPBlockURLResponseDataKey]];
+											 userInfo: [NSDictionary dictionaryWithObjectsAndKeys: responseData, HTTPBlockURLResponseDataKey, [self _convertData: responseData toStringUsingEncoding: NSUTF8StringEncoding], HTTPBlockURLResponseAsStringKey, nil]];
 		
 		[self connection: connection didFailWithError: HTTPError];
 	}
