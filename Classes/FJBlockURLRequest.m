@@ -47,6 +47,7 @@ int const kMaxAttempts = 3;
 @synthesize attempt;
 @synthesize responseData;
 @synthesize maxAttempts;
+@synthesize secondsToWaitBeforeExecution;
 
 
 - (void) dealloc
@@ -74,6 +75,7 @@ int const kMaxAttempts = 3;
         self.workQueue = dispatch_queue_create([queueName UTF8String], NULL);
         self.maxAttempts = kMaxAttempts;
         self.responseQueue = dispatch_get_main_queue();
+		self.secondsToWaitBeforeExecution = 0;
         
     }
 	return self;
@@ -144,6 +146,11 @@ int const kMaxAttempts = 3;
     
     dispatch_sync(self.workQueue, ^{
         
+		if (self.secondsToWaitBeforeExecution > 0)
+		{
+			[NSThread sleepUntilDate: [NSDate dateWithTimeIntervalSinceNow: (NSTimeInterval)self.secondsToWaitBeforeExecution]];
+		}
+		
         if(inProcess){
             didStart = NO;
             return;

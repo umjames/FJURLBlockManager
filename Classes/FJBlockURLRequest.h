@@ -36,6 +36,7 @@ typedef enum  {
 
 @property (nonatomic, retain) NSMutableData *responseData; //result
 
+@property (nonatomic) NSUInteger secondsToWaitBeforeExecution; // how many seconds to wait before executing block, default = 0;
 @property (nonatomic) int maxAttempts; //how many retries before failure, default = 3;
 
 @property (nonatomic, assign, readonly) FJBlockURLManager *manager; //should this run on a specific manager, defualt = [FJBlockURLManager defaultManager]
