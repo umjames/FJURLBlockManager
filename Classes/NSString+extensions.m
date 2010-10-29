@@ -23,6 +23,28 @@
 
 @end
 
+@implementation NSString (URLUtilities)
+
+- (NSString*)URLEncodedString
+{
+	CFStringRef	result = CFURLCreateStringByAddingPercentEscapes(NULL,  (CFStringRef)self, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8);
+	
+	debugLog(@"URL encoding \"%@\": %@", self, result);
+	
+	return [(NSString*)result autorelease];
+}
+
+- (NSString*)URLDecodedString
+{
+	NSString*	result = [self stringByReplacingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+	
+	debugLog(@"URL decoding \"%@\": %@", self, result);
+	
+	return result;
+}
+
+@end
+
 
 @implementation NSString (parsing) 
 

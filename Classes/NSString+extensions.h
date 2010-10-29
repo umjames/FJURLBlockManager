@@ -34,7 +34,12 @@ enum {
 
 @end
 
+@interface NSString (URLUtilities)
 
+- (NSString*)URLEncodedString;
+- (NSString*)URLDecodedString;
+
+@end
 
 @interface NSString (parsing) 
 

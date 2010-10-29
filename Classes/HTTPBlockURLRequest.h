@@ -16,10 +16,28 @@ extern NSString* const HTTPBlockURLResponseAsStringKey;
 
 @interface HTTPBlockURLRequest : FJBlockURLRequest
 {
+	NSMutableDictionary*	_parameters;
 }
 
 @property (nonatomic, readonly, retain) NSHTTPURLResponse*	HTTPResponse;
 
 - (BOOL)responseWasSuccessful;
+- (NSString*)responseBodyAsString: (NSData*)data;
+
+- (NSDictionary*)parameters;
+- (void)clearParameters;
+
+- (void)setValue: (NSString*)value forParameterName: (NSString*)name;
+- (void)addValue: (NSString*)value forParameterName: (NSString*)name;
+
+- (void)prepare;
+
+- (BOOL)isMultipart;
+
+@end
+
+@interface HTTPBlockURLRequest (Debug)
+
+- (NSString*)debugDescription;
 
 @end
