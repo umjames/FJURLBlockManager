@@ -225,7 +225,12 @@ NSString* const HTTPBlockURLResponseAsStringKey = @"HTTPBlockURLResponseAsString
 		
 		[self setHTTPBody: httpBody];
 		[self setValue: [NSString stringWithFormat: @"%u", [httpBody length]] forHTTPHeaderField: @"Content-Length"];
-		[self setValue: @"application/x-www-form-urlencoded" forHTTPHeaderField: @"Content-Type"];
+		
+		// set the content-type header only if no other content-type header is specified
+		if (nil == [self valueForHTTPHeaderField: @"Content-Type"])
+		{
+			[self setValue: @"application/x-www-form-urlencoded" forHTTPHeaderField: @"Content-Type"];
+		}
 	}
 }
 
