@@ -60,6 +60,9 @@ int const kMaxAttempts = 3;
     connection = nil;
     Block_release(completionBlock);
     Block_release(failureBlock);
+	
+	debugLog(@"releasing response dispatch queue");
+	
     dispatch_release(responseQueue);  
     dispatch_release(workQueue);
     [connectionThread release];
@@ -98,12 +101,14 @@ int const kMaxAttempts = 3;
 */
 
 - (void)setResponseQueue:(dispatch_queue_t)queue{
-    
+    debugLog(@"setting response queue to %s", dispatch_queue_get_label(queue));
     if(responseQueue != queue){
         
         dispatch_retain(queue);
         if(responseQueue)
+		{
             dispatch_release(responseQueue);
+		}
         responseQueue = queue;
 
     }
