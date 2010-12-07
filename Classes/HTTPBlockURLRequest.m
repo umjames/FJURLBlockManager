@@ -59,16 +59,33 @@ NSString* const HTTPBlockURLResponseAsStringKey = @"HTTPBlockURLResponseAsString
 {
 	NSMutableArray*	queryPairs = [NSMutableArray arrayWithCapacity: 3];
 	
+	debugLog(@"_doNotEncodeParameterNames = %@", _doNotEncodeParameterNames);
+	
 	[_parameters enumerateKeysAndObjectsUsingBlock: ^(id paramName, id paramValue, BOOL* stop) {
 		if ([paramValue isKindOfClass: [NSArray class]])
 		{
 			[(NSArray*)paramValue enumerateObjectsUsingBlock: ^(id value, NSUInteger index, BOOL* stop2) {
-				[queryPairs addObject: [NSString stringWithFormat: @"%@=%@", [(NSString*)paramName URLEncodedString], [(NSString*)value URLEncodedString]]];
+				
+				if (nil != [_doNotEncodeParameterNames member: [(NSString*)paramName lowercaseString]])
+				{
+					[queryPairs addObject: [NSString stringWithFormat: @"%@=%@", [(NSString*)paramName URLEncodedString], (NSString*)value]];
+				}
+				else
+				{
+					[queryPairs addObject: [NSString stringWithFormat: @"%@=%@", [(NSString*)paramName URLEncodedString], [(NSString*)value URLEncodedString]]];
+				}
 			}];
 		}
 		else
 		{
-			[queryPairs addObject: [NSString stringWithFormat: @"%@=%@", [(NSString*)paramName URLEncodedString], [(NSString*)paramValue URLEncodedString]]];
+			if (nil != [_doNotEncodeParameterNames member: [(NSString*)paramName lowercaseString]])
+			{
+				[queryPairs addObject: [NSString stringWithFormat: @"%@=%@", [(NSString*)paramName URLEncodedString], (NSString*)paramValue]];
+			}
+			else
+			{
+				[queryPairs addObject: [NSString stringWithFormat: @"%@=%@", [(NSString*)paramName URLEncodedString], [(NSString*)paramValue URLEncodedString]]];
+			}
 		}
 	}];
 	
@@ -82,6 +99,7 @@ NSString* const HTTPBlockURLResponseAsStringKey = @"HTTPBlockURLResponseAsString
 	if (self)
 	{
 		_parameters = [[NSMutableDictionary alloc] initWithCapacity: 5];
+		_doNotEncodeParameterNames = [[NSMutableSet alloc] initWithCapacity: 5];
 	}
 	
 	return self;
@@ -92,6 +110,7 @@ NSString* const HTTPBlockURLResponseAsStringKey = @"HTTPBlockURLResponseAsString
 	[HTTPResponse release];
 	HTTPResponse = nil;
 	
+	[_doNotEncodeParameterNames release];
 	[_parameters release];
 	
 	[super dealloc];
@@ -156,11 +175,31 @@ NSString* const HTTPBlockURLResponseAsStringKey = @"HTTPBlockURLResponseAsString
 
 - (void)setValue: (NSString*)value forParameterName: (NSString*)name
 {
+	[self setValue: value forParameterName: name URLEncode: YES];
+}
+
+- (void)setValue: (NSString*)value forParameterName: (NSString*)name URLEncode: (BOOL)URLEncode
+{
+	if (NO == URLEncode)
+	{
+		[_doNotEncodeParameterNames addObject: [name lowercaseString]];
+	}
+	
 	[_parameters setObject: value forKey: name];
 }
 
 - (void)addValue: (NSString*)value forParameterName: (NSString*)name
 {
+	[self addValue: value forParameterName: name URLEncode: YES];
+}
+
+- (void)addValue: (NSString*)value forParameterName: (NSString*)name URLEncode: (BOOL)URLEncode
+{
+	if (NO == URLEncode)
+	{
+		[_doNotEncodeParameterNames addObject: [name lowercaseString]];
+	}
+	
 	id previousValue = [_parameters objectForKey: name];
 	
 	if (nil == previousValue)

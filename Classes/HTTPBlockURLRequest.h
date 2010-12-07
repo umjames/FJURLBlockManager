@@ -17,6 +17,7 @@ extern NSString* const HTTPBlockURLResponseAsStringKey;
 @interface HTTPBlockURLRequest : FJBlockURLRequest
 {
 	NSMutableDictionary*	_parameters;
+	NSMutableSet*			_doNotEncodeParameterNames;
 }
 
 @property (nonatomic, readonly, retain) NSHTTPURLResponse*	HTTPResponse;
@@ -26,6 +27,9 @@ extern NSString* const HTTPBlockURLResponseAsStringKey;
 
 - (NSDictionary*)parameters;
 - (void)clearParameters;
+
+- (void)setValue: (NSString*)value forParameterName: (NSString*)name URLEncode: (BOOL)URLEncode;
+- (void)addValue: (NSString*)value forParameterName: (NSString*)name URLEncode: (BOOL)URLEncode;
 
 - (void)setValue: (NSString*)value forParameterName: (NSString*)name;
 - (void)addValue: (NSString*)value forParameterName: (NSString*)name;
