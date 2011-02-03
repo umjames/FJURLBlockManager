@@ -214,8 +214,7 @@ static NSThread* _sharedThread = nil;
         
         [self addRequest:req];
         
-        [self sendNextRequest];
-        
+		[self sendNextRequest];
     });
 }
 
@@ -252,7 +251,7 @@ static NSThread* _sharedThread = nil;
         
         [self.requests addObject:req];
         [self.requestMap setObject:req forKey:[NSString stringWithInt:[req hash]]];
-
+		debugLog(@"queueing request with hash %@ and URL %@", [NSString stringWithInt: [req hash]], [[req URL] absoluteString]);
     });
     
 }
@@ -275,9 +274,10 @@ static NSThread* _sharedThread = nil;
         
         debugLog(@"url to fetch: %@", [[nextRequest URL] description]);
         
+		[nextRequest addObserver:self forKeyPath:@"isFinished" options:0 context:nil]; //TODO: possibly call on request queue
+		
+		debugLog(@"starting request with hash %@", [NSString stringWithInt: [nextRequest hash]]);
         [nextRequest start];
-        [nextRequest addObserver:self forKeyPath:@"isFinished" options:0 context:nil]; //TODO: possibly call on request queue
-        
     });
 }
 
@@ -300,6 +300,8 @@ static NSThread* _sharedThread = nil;
     }
         
     FJBlockURLRequest* nextRequest = [self.requests objectAtIndex:index];
+	
+	debugLog(@"activating request with hash %@", [NSString stringWithInt: [nextRequest hash]]);
     [self.activeRequests addObject:nextRequest];
     [self.requests removeObjectAtIndex:index];    
     
@@ -309,7 +311,7 @@ static NSThread* _sharedThread = nil;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     
-    if(keyPath == @"isFinished"){
+    if([@"isFinished" isEqualToString: keyPath]){
         
         FJBlockURLRequest* req = (FJBlockURLRequest*)object;
 
@@ -323,7 +325,7 @@ static NSThread* _sharedThread = nil;
             });
             
             dispatch_async(self.workQueue, ^{
-                
+                debugLog(@"request with hash %@ has finished", [NSString stringWithInt: [req hash]]);
                 [self.requestMap removeObjectForKey:[NSString stringWithInt:[req hash]]];
                 [self.requests removeObject:req];
                 [self.activeRequests removeObject:req];

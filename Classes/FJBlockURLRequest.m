@@ -132,6 +132,24 @@ int const kMaxAttempts = 3;
     
 }
 
+- (NSUInteger)hash
+{
+	return ([super hash] + [[[self URL] absoluteString] hash] + [[self allHTTPHeaderFields] hash]);
+}
+
+- (BOOL)isEqual: (id)object
+{
+	if ([self class] == [object class])
+	{
+		if ([self hash] == [object hash])
+		{
+			return YES;
+		}
+	}
+	
+	return NO;
+}
+
 - (void)scheduleWithNetworkManager:(FJBlockURLManager*)networkManager{
     
     if(self.manager == nil){
